@@ -201,6 +201,35 @@ class Sort
 		}
 		return $arr;
 	}
+
+	/**
+	 * 桶排序
+	 * 桶排序又称为箱排序，其工作原理是将数组分到有限数量的桶里。每个桶再个别排序，最后将各个桶中的数据有序的合并起来。
+	 * 1. 找出待排序数组中的最大值max和最小值min
+	 * 2. 设置一个定量的数组当作桶，范围为min~max
+	 * 3. 遍历待排序数组，计算每个元素应该放的桶，把数据放到对应的桶里
+	 * 4. 如果桶不为空，对桶内的数据进行排序
+	 * 5. 遍历桶数组，将所有的桶中排序好的元素放到一个新的数组里
+	 */
+	public function bucketSort($arr,$size)
+	{
+		// find max and min
+		$min = min($arr);
+		$max = max($arr);
+		// fill bucket
+		$bucketArr = array_fill(0, $max+1, 0);
+		// mark bucket
+		for ($i=0; $i < $size; $i++) { 
+			$bucketArr[$arr[$i]]++;
+		}
+		$targetArr = array();
+		for ($j=$min; $j <= $max; $j++) { 
+			for ($k=$bucketArr[$j]; $k > 0; $k--) { 
+				$targetArr[] = $j;
+			}
+		}
+		return $targetArr;
+	}
 }
 
 $testArr = [1,3,5,7,9,2,4,6,8,10,1,2,3,4];
@@ -214,6 +243,7 @@ $resArrBinaInsert = $sort->binaryInsertSort($testArr,$size);
 $resArrMerge = $sort->mergeSort($testArr,$size);
 $resArrQuick = $sort->quickSort($testArr,0,$size-1);
 $resArrShell = $sort->shellSort($testArr,$size);
+$resArrBucket = $sort->bucketSort($testArr,$size);
 echo "=======================\nBubble Sort\n=======================\n";
 foreach ($resArrBubble as $value) {
 	echo "$value ";
@@ -242,5 +272,8 @@ echo "\n\n\n=======================\nShell Sort\n=======================\n";
 foreach ($resArrShell as $value) {
 	echo "$value ";
 }
-
+echo "\n\n\n=======================\nBucket Sort\n=======================\n";
+foreach ($resArrBucket as $value) {
+	echo "$value ";
+}
 echo "\n";
