@@ -176,6 +176,28 @@ class Sort
 		$this->quickSort($arr,$i+1,$rightIndex);
 		return $arr;
 	}
+
+	/**
+	 * 希尔排序
+	 * 希尔排序是插入排序的一种又称为“最小增量排序”，是直接插入排序的一种优化改进版本
+	 * 1. 对于n个待排序的数列，取一个小于n的整数gap(gap被称为步长，通常开始选为n/2)
+	 * 2. 根据所选步长，将待排序元素分成若干组子序列，所有距离为gap的倍数的记录放在同一个组中
+	 * 3. 对各组内的元素进行直接插入排序
+	 * 4. 继续改变gap=gap/2，重复第3步，直到gap=1时，整个数列就是有序的
+	 */
+	public function shellSort($arr,$size)
+	{
+		for ($gap=intval($size/2); $gap > 0; $gap=intval($gap/2)) {
+			for ($i=$gap; $i < $size; $i++) { 
+				$j = $i;
+				while ($j - $gap>=0 && $arr[$j] < $arr[$j-$gap]) {
+					$this->swap($arr,$j,$j-$gap);
+					$j = $j - $gap;
+				}
+			}
+		}
+		return $arr;
+	}
 }
 
 $testArr = [1,3,5,7,9,2,4,6,8,10,1,2,3,4];
@@ -188,6 +210,7 @@ $resArrInsert = $sort->insertSort($testArr,$size);
 $resArrBinaInsert = $sort->binaryInsertSort($testArr,$size);
 $resArrMerge = $sort->mergeSort($testArr,$size);
 $resArrQuick = $sort->quickSort($testArr,0,$size-1);
+$resArrShell = $sort->shellSort($testArr,$size);
 echo "=======================\nBubble Sort\n=======================\n";
 foreach ($resArrBubble as $value) {
 	echo "$value ";
@@ -210,6 +233,10 @@ foreach ($resArrMerge as $value) {
 }
 echo "\n\n\n=======================\nQuick Sort\n=======================\n";
 foreach ($resArrQuick as $value) {
+	echo "$value ";
+}
+echo "\n\n\n=======================\nShell Sort\n=======================\n";
+foreach ($resArrShell as $value) {
 	echo "$value ";
 }
 
