@@ -184,6 +184,9 @@ class Sort
 	 * 2. 根据所选步长，将待排序元素分成若干组子序列，所有距离为gap的倍数的记录放在同一个组中
 	 * 3. 对各组内的元素进行直接插入排序
 	 * 4. 继续改变gap=gap/2，重复第3步，直到gap=1时，整个数列就是有序的
+	 *
+	 * https://www.cnblogs.com/skywang12345/p/3597597.html#a3
+	 * https://www.cnblogs.com/chengxiao/p/6104371.html
 	 */
 	public function shellSort($arr,$size)
 	{
